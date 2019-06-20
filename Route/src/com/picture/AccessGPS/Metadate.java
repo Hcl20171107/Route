@@ -12,7 +12,11 @@ import com.drew.metadata.Tag;
 public class Metadate{
 	public static void main(String[] args) throws Exception, Exception{  
         File file = new File("C:\\Users\\hp\\Desktop\\张阳阳.jpg");  
+        File file1 = new File("E:\\手机备份\\相册2019.1.17\\相片\\IMG20190114114507.jpg");
+        File file2 = new File("E:\\手机备份\\相册2019.1.17\\Camera\\IMG20180731104858.jpg");
         printImageTags(file);
+        printImageTags(file1);
+        printImageTags(file2);
     } 
     /** 
      * 读取照片里面的信息 
