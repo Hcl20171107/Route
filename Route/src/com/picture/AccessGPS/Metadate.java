@@ -1,5 +1,6 @@
 package com.picture.AccessGPS;  
-import java.io.File;    
+import java.io.File;
+import java.io.IOException;
 
 import com.drew.imaging.ImageMetadataReader;  
 import com.drew.imaging.ImageProcessingException;
@@ -54,6 +55,24 @@ public class Metadate{
         Double miao = Double.parseDouble(point.substring(point.indexOf("'")+1, point.indexOf("\"")).trim());  
         Double duStr = du + fen / 60 + miao / 60 / 60 ;  
         return duStr.toString();  
-    }  
+    }
+    public void returnJson(HttpServletResponse response, HttpServletResponse request, String json) {
+        try {
+        	String contentType = "application/json; charset=UTF-8";
+            if (request != null) {
+                 String accept = request.getHeader("accept");
+                if (accept != null && !accept.contains("json")) {
+                   contentType = "text/html; charset=UTF-8";
+                 }
+            }
+           response.setContentType(contentType);
+           response.getWriter().write(json);
+           response.getWriter().flush();
+         } catch (IOException e) {
+           if (logger.isErrorEnabled()) {
+                logger.error("returnJson is error!", e);
+             }
+         }
+     }
 }
  
