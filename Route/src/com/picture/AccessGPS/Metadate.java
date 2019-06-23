@@ -44,35 +44,5 @@ public class Metadate{
             }  
         }  
     }  
-    /** 
-     * 经纬度格式  转换为  度分秒格式 ,如果需要的话可以调用该方法进行转换
-     * @param point 坐标点 
-     * @return 
-     */ 
-    public static String pointToLatlong (String point ) {  
-        Double du = Double.parseDouble(point.substring(0, point.indexOf("°")).trim());  
-        Double fen = Double.parseDouble(point.substring(point.indexOf("°")+1, point.indexOf("'")).trim());  
-        Double miao = Double.parseDouble(point.substring(point.indexOf("'")+1, point.indexOf("\"")).trim());  
-        Double duStr = du + fen / 60 + miao / 60 / 60 ;  
-        return duStr.toString();  
-    }
-    public void returnJson(HttpServletResponse response, HttpServletResponse request, String json) {
-        try {
-        	String contentType = "application/json; charset=UTF-8";
-            if (request != null) {
-                 String accept = request.getHeader("accept");
-                if (accept != null && !accept.contains("json")) {
-                   contentType = "text/html; charset=UTF-8";
-                 }
-            }
-           response.setContentType(contentType);
-           response.getWriter().write(json);
-           response.getWriter().flush();
-         } catch (IOException e) {
-           if (logger.isErrorEnabled()) {
-                logger.error("returnJson is error!", e);
-             }
-         }
-     }
 }
  
