@@ -126,4 +126,5 @@ public class CoordinateConversion {
                 * pi)) * 2.0 / 3.0;
         return ret;
     }
+
 }
