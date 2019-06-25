@@ -36,10 +36,8 @@ public class Metadate{
                 	System.out.println("拍摄时间: "+desc);
                 }else if (tagName.equals("GPS Latitude")) {  
                 	System.err.println("纬度 : "+desc);
-//                	System.err.println("纬度(度分秒格式) : "+pointToLatlong(desc));
                 } else if (tagName.equals("GPS Longitude")) {  
                 	System.err.println("经度: "+desc);
-//                	System.err.println("经度(度分秒格式): "+pointToLatlong(desc));
                 }
             }  
         }  
