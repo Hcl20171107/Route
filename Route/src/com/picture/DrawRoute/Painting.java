@@ -22,6 +22,17 @@ public class Painting extends JPanel{
 		frame.setLocationRelativeTo(null); 
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); 
 		frame.setVisible(true); 
+		JFrame frame1 = new JFrame("paintTest"); 
+		Painting painting1 = new Painting(); 
+		frame1.add(painting1); 
+		frame1.setSize(400,400); 
+		frame1.setLocationRelativeTo(null); 
+		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		frame1.setVisible(true);
+
 		} 
+	
+		
+	
 	}
 	
