@@ -15,10 +15,10 @@ public class Painting extends JPanel{
 		super.paint(g); System.out.println("paint"); 
 		} 
 	public static void main(String [] ars){ 
-		JFrame frame = new JFrame("paintTest");
+		JFrame frame = new JFrame("Route");
 		Painting painting = new Painting(); 
 		frame.add(painting); 
-		frame.setSize(300,300); 
+		frame.setSize(600,600); 
 		frame.setLocationRelativeTo(null); 
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); 
 		frame.setVisible(true); 
