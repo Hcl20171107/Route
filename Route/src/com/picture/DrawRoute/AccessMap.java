@@ -1,6 +1,7 @@
 package com.picture.DrawRoute;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 import com.github.heqiao2010.BusinessException;
 import com.github.heqiao2010.StringUtils;
@@ -33,5 +34,22 @@ public class AccessMap {
 		if (StringUtils.isNotEmpty(errorMsg)) {
 			throw new BusinessException(errorMsg);
 		}
+	}
+	public static String getParameterStr(HashMap<String, String> aparameters) 
+			throws BusinessException{
+		checkParameter(aparameters);
+		StringBuilder retStr = new StringBuilder();
+		Iterator<String> it = aparameters.keySet().iterator();
+		while(it.hasNext()){
+			String name = it.next();
+			String value = aparameters.get(name);
+			if(StringUtils.isNotEmpty(value)){
+				retStr.append(name + "=" + aparameters.get(name));
+				if(it.hasNext()){
+					retStr.append('&');
+				}
+			}
+		}
+		return retStr.toString();
 	}
 }
