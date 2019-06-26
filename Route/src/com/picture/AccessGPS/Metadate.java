@@ -42,5 +42,12 @@ public class Metadate{
             }  
         }  
     }  
+    public static String pointToLatlong (String point ) {  
+        Double du = Double.parseDouble(point.substring(0, point.indexOf("бу")).trim());  
+        Double fen = Double.parseDouble(point.substring(point.indexOf("бу")+1, point.indexOf("'")).trim());  
+        Double miao = Double.parseDouble(point.substring(point.indexOf("'")+1, point.indexOf("\"")).trim());  
+        Double duStr = du + fen / 60 + miao / 60 / 60 ;  
+        return duStr.toString();  
+    }  
 }
  
