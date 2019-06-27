@@ -530,5 +530,8 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 	 * »ñÈ¡°ë¾¶
 	 * @return
 	 */
-
+	public String getRadiusStr(){
+		return null == this.getRadTextFiled() ? "" 
+				: this.getRadTextFiled().getText();
+	}
 }
