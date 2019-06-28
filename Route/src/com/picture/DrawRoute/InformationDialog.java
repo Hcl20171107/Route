@@ -1,22 +1,34 @@
 package com.picture.DrawRoute;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.logging.Logger;
 
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton; // 按钮
 import javax.swing.JComboBox; // 下拉列表组件
 import javax.swing.JDialog; // 对话框， 没有最大化、最小化，只有退出键
 import javax.swing.JLabel; // JLabel 对象可以显示文本、图像或同时显示二者
 import javax.swing.JPanel; // JPanel 是对窗体中具有相同逻辑功能的组件进行组合
+import javax.swing.JRadioButton;
 import javax.swing.JTextField; // JTextField  是一个轻量级组件，它允许编辑单行文本
 import javax.swing.UIManager;
 
@@ -59,13 +71,13 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 			return northPanel;
 		}
 		northPanel = new JPanel();
-		northPanel.setPreferredSize(new Dimension(400, 70));
-		northPanel.setLayout(null);
-		northPanel.add(getLatitudeLabel(), null); 
-		northPanel.add(getLongitudeLabel(), null);
-		northPanel.add(getLatitudeTextFiled(), null); 
-		northPanel.add(getLongitudeTextFiled(), null);
-		northPanel.setBackground(Color.LIGHT_GRAY);
+		northPanel.setPreferredSize(new Dimension(400, 70));    // 设置最好的大小
+		northPanel.setLayout(null);                            // Layout(布局管理器) 指定组件的摆放位置
+		northPanel.add(getLatitudeLabel(), null);               // 纬度提示
+		northPanel.add(getLongitudeLabel(), null);             
+		northPanel.add(getLatitudeTextFiled(), null);           // 显示纬度坐标 
+		northPanel.add(getLongitudeTextFiled(), null);        
+		northPanel.setBackground(Color.LIGHT_GRAY);              // 背景色
 		return northPanel;
 	}
 
@@ -83,7 +95,7 @@ KeyListener, ItemListener, FocusListener, MouseListener{
                 g.drawLine(0, 0, getWidth(), 0);
             }
         };
-		centerPanel.setLayout(null);     // Layout(布局管理器) 指定组件的摆放位置
+		centerPanel.setLayout(null);     
 		return centerPanel;
 	}
 
@@ -121,7 +133,7 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 	
 	private JLabel getLatitudeLabel() {
 		if (latitudeLabel == null) {
-			latitudeLabel = new JLabel("经度：");
+			latitudeLabel = new JLabel("纬度：");
 			latitudeLabel.setPreferredSize(new Dimension(40, 20)); // 设定最佳显示大小
 			latitudeLabel.setFont(new Font("dialog", 0, 14));// 逻辑字体，0平常样式、1为粗体 ，字号
 			latitudeLabel.setBounds(5, 40, 40, 20); // 设置 组件尺寸和位置（坐标x，坐标y，窗口的宽度，窗口的高度 ）
@@ -129,16 +141,6 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 		return latitudeLabel;
 	}
 	
-	private JLabel getLongitudeLabel() {
-		if (longitudeLabel == null) {
-			longitudeLabel = new JLabel("经度：");
-			longitudeLabel.setPreferredSize(new Dimension(40, 20)); 
-			longitudeLabel.setFont(new Font("dialog", 0, 14));
-			longitudeLabel.setBounds(35, 40, 40, 20);
-		}
-		return longitudeLabel;
-	}
-
 	private JTextField getLatitudeTextFiled() {
 		if(null == latitudeTextFiled){
 			latitudeTextFiled = new JTextField();
@@ -149,24 +151,24 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 		return latitudeTextFiled;
 	}
 	
+	private JLabel getLongitudeLabel() {
+		if (longitudeLabel == null) {
+			longitudeLabel = new JLabel("经度：");
+			longitudeLabel.setPreferredSize(new Dimension(40, 20)); 
+			longitudeLabel.setFont(new Font("dialog", 0, 14));
+			longitudeLabel.setBounds(210, 40, 40, 20);
+		}
+		return longitudeLabel;
+	}
+	
 	private JTextField getLongitudeTextFiled() {
 		if(null == longitudeTextFiled){
 			longitudeTextFiled = new JTextField();
 			longitudeTextFiled.setText(AutoCompleter.getCenter());
 			longitudeTextFiled.setPreferredSize(new Dimension(160, 20));
-			longitudeTextFiled.setBounds(50, 40, 150, 20);
+			longitudeTextFiled.setBounds(255, 40, 150, 20);
 		}
 		return longitudeTextFiled;
-	}
-	
-	public PicturePanel getImagePanel(){
-		if(null == imagePanel){
-			imagePanel = new PicturePanel(this);
-			imagePanel.setBorder(BorderFactory.createLineBorder(UIManager
-					.getColor("MessageDialog.linecolor")));
-			imagePanel.setBounds(10, 4, 400, 300);
-		}
-		return imagePanel;
 	}
 	
 	public JLabel getScaleLabel(){
@@ -184,7 +186,7 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 			scaleComboBox = new JComboBox();
 			scaleComboBox.setModel(new DefaultComboBoxModel(
 					AutoCompleter.zoomInfo.toArray(new String[0])));
-			scaleComboBox.setPreferredSize(new Dimension(2*SCALE, 20));
+			scaleComboBox.setPreferredSize(new Dimension(2*SCALE, 20)); //SCALE 小数位数
 			scaleComboBox.setBounds(5, 5, 2*SCALE, 20);
 			scaleComboBox.addItemListener( this);
 		}
@@ -199,16 +201,15 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 	        {
 	            return;
 	        }
-	        getContentPane().setLayout(new BorderLayout());
+	        getContentPane().setLayout(new BorderLayout());           // 边框布局，除菜单条外
 	        setSize(420, 440);
-			//setResizable(false);
 	        if (getNorthPanel() != null)
 	        {
 	            getContentPane().add(getNorthPanel(), BorderLayout.NORTH);
 	        }
 	        if (getCenterPanel() != null)
 	        {
-	            getCenterPanel().setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 8));
+	            getCenterPanel().setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 8));    // 组件边框特性 线边框，灰色，8px
 	            getContentPane().add(getCenterPanel(), BorderLayout.CENTER);
 	            getCenterPanel().setBackground(Color.LIGHT_GRAY);
 	        }
@@ -230,7 +231,7 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 		String strText = "";
 		boolean blSetSize = true;
 		boolean blSetPreferredSize = true;
-		if (component instanceof AbstractButton) {
+		if (component instanceof AbstractButton) {   // 子，父
 			strText = ((AbstractButton) component).getText();
 
 			if (component instanceof JRadioButton) {
@@ -262,11 +263,10 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 	 * 当经纬度坐标发生变化时，执行此动作，获取新图片，并重绘
 	 */
 	private void centerChanged(){
-		String centerStr = getLocationTextFiled().getText();
-		double[] d = GeofencingUtils.centerStr2Double(centerStr);
-		if(null!=d && d.length > 0){
-			restPicByNewCenter(d[0], d[1]);
-		}
+		String centerStr1 = getLatitudeTextFiled().getText();
+		String centerStr2 = getLongitudeTextFiled().getText();
+		double[] d1 = Numerical.centerStr2Double(centerStr1);
+		double[] d2 = Numerical.centerStr2Double(centerStr2);
 	}
 	
 	/**
@@ -274,36 +274,17 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 	 * @param longitude
 	 * @param lagtitude
 	 */
-	private void restPicByNewCenter(double longitude, double lagtitude){
+	/*private void restPicByNewCenter(double longitude, double lagtitude){
 		try {
 			getImagePanel().setPath(AutoCompleter.buildImageUrl(longitude, lagtitude));
 		} catch (BusinessException e) {
 			Logger.error(e.toString());
 		}
-	}
+	}*/
 	
 	protected void initButton() {
 		getButtonPanel().add(getScaleLabel());
 		getButtonPanel().add(getScaleComboBox());
-	}
-
-	/**
-	 * 当画圆圈的半径的值发生改变，执行此动作，计算出新圆的直径并重绘
-	 */
-	private void radiusChanged(){
-		String radiusStr = radTextFiled.getText();
-		int radius = 0;
-		int scale = getScale();
-		try {
-			radius = Integer.valueOf(radiusStr);
-		} catch (NumberFormatException e1) {
-			Logger.error(e1.toString());
-			radius = 0;
-		}
-		if (0 != radius && 0 != scale) {
-			setOvalSize(2 * SCALE * radius / scale);
-			getImagePanel().setOvalSize(getOvalSize());
-		}
 	}
 	
 	/**
@@ -361,13 +342,6 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 		if (ch == KeyEvent.CHAR_UNDEFINED || ch != '\n') {
 			return;
 		}
-		radiusChanged();
-	}
-	
-	//FocusListener半径输入框失去焦点时，重绘圆圈
-	@Override
-	public void focusLost(FocusEvent e) {
-		radiusChanged();
 	}
 	
 	@Override
@@ -380,31 +354,7 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 	public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED){
 			int index = scaleComboBox.getSelectedIndex();
-			try {
-				radiusChanged();
-				getImagePanel().setPath(AutoCompleter.buildImageUrl(index));
-			} catch (BusinessException e1) {
-				Logger.error(e1.toString());
-			}
 		}
-	}
-	
-	//ActionListener点击查询按钮后事件处理
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		if (evt.getSource() == checkBtn){
-			getGeoComboBox().getCompleter().check();
-		} else if(evt.getSource() == getBtnClose()){
-			closeCancel();
-		}
-	}
-
-	public static int getOvalSize() {
-		return ovalSize;
-	}
-
-	public static void setOvalSize(int ovalSize) {
-		GeofencingDialog.ovalSize = ovalSize;
 	}
 
 	public boolean isBlInited() {
@@ -470,31 +420,31 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		//获取当前经纬度
 		String centerString = AutoCompleter.getCenter();
-		double d[] = GeofencingUtils.centerStr2Double(centerString);
+		double d[] = Numerical.centerStr2Double(centerString);
 		if (null == d || d.length == 0) {
 			return;
 		}
-		Logger.error("原经纬度坐标" + d[0] + "," + d[1]);
+		//Logger.error("原经纬度坐标" + d[0] + "," + d[1]);
 		//计算鼠标点击位置到图片中心位置距离
-		int imageWidth = getImagePanel().getWidth();
+		/*int imageWidth = getImagePanel().getWidth();
 		int imageHeight = getImagePanel().getHeight();
 		int x = e.getX() - imageWidth /2;
-		int y = imageHeight/2 - e.getY();
-		Logger.error("点击位置" + x + "," + y);
-		Logger.error("纬度变化像素:" + y + "经度变化像素:" + x);
+		int y = imageHeight/2 - e.getY();*/
+		//Logger.error("点击位置" + x + "," + y);
+		//Logger.error("纬度变化像素:" + y + "经度变化像素:" + x);
 		//根据鼠标点击位置计算新的经纬度坐标
-		int scale = GeofencingUtils
+		int scale = Numerical
 				.getScaleByindex(getScaleComboBox().getSelectedIndex());
-		double xlong = GeofencingUtils.getTudeX(x, scale);
-		d[0] += xlong;
-		double xlati = GeofencingUtils.getTudeX(y, scale);
-		d[1] += xlati;
-		Logger.error("经度差:" + xlong + ",纬度差:" + xlati);
-		//刷新图片
-		restPicByNewCenter(d[0], d[1]);
+		//double xlong = Numerical.getTudeX(x, scale);
+		//d[0] += xlong;
+		//double xlati = Numerical.getTudeX(y, scale);
+		//d[1] += xlati;
+		//Logger.error("经度差:" + xlong + ",纬度差:" + xlati);
 		//更新坐标值
-		getLocationTextFiled().setText(GeofencingUtils.df.format(d[0]) + "," + GeofencingUtils.df.format(d[1]));
-		Logger.error("新经纬度坐标:" + GeofencingUtils.df.format(d[0]) + "," + GeofencingUtils.df.format(d[1]));
+		getLatitudeTextFiled().setText(Numerical.df.format(d[0]) + "," + Numerical.df.format(d[1]));
+		//Logger.error("新纬度坐标:" + Numerical.df.format(d[0]) + "," + Numerical.df.format(d[1]));
+		getLongitudeTextFiled().setText(Numerical.df.format(d[0]) + "," + Numerical.df.format(d[1]));
+		//Logger.error("新经度坐标:" + Numerical.df.format(d[0]) + "," + Numerical.df.format(d[1]));
 	}
 	
 	@Override
@@ -521,17 +471,13 @@ KeyListener, ItemListener, FocusListener, MouseListener{
 		
 	}
 	
-	public String getLocationStr(){
-		return null==this.getLocationTextFiled() ? "" : 
-			this.getLocationTextFiled().getText();
+	public String getLatitudeStr(){
+		return null==this.getLatitudeTextFiled() ? "" : 
+			this.getLatitudeTextFiled().getText();
 	}
 	
-	/**
-	 * 获取半径
-	 * @return
-	 */
-	public String getRadiusStr(){
-		return null == this.getRadTextFiled() ? "" 
-				: this.getRadTextFiled().getText();
+	public String getLongitudeStr(){
+		return null==this.getLongitudeTextFiled() ? "" :
+			this.getLongitudeTextFiled().getText();
 	}
 }
